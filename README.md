@@ -1,0 +1,2 @@
+# jamaLinks
+affiliate website 
