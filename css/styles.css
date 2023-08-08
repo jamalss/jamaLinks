@@ -13,8 +13,8 @@ h1 {
 }
 
 h2 {
-  margin-top: 10%;
-  font-family: sans-serif;
+  margin: 10% auto;
+  font-family: 'Jost', sans-serif;
 }
 
 .card {
@@ -42,9 +42,16 @@ p {
   border: 0px solid white;
   border-radius: 1px;
   padding: 2px;
-  background-color: ;
   white-space: pre-wrap;
   font-family: sans-serif;
+}
+
+ol {
+  font-size: 24px;
+}
+
+ol li {
+  font-size: 20px;
 }
 
 .first {
@@ -96,21 +103,44 @@ h3 {
 }
 
 footer h5 {
-	margin: 5% auto;
+  margin: 5% auto;
 }
 
 footer {
-	border-top: 2px solid grey;
+  border-top: 2px solid grey;
 }
 
 footer .connects {
-	margin-bottom: 10%;
+  margin-bottom: 10%;
 }
 
 footer .connects span {
-	margin: 5%;
+  margin: 5%;
 }
 
+.shown,
+.shown1,
+.shown2 {
+  display: none;
+}
+
+.shown3,
+.shown4,
+.shown5 {
+  display: none;
+}
+
+.shown6,
+.shown7,
+.shown8 {
+  display: none;
+}
+
+.shown9,
+.shown10,
+.shown11 {
+  display: none;
+}
 
 /* The side navigation menu */
 .sidenav {
