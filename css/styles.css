@@ -13,8 +13,28 @@ h1 {
 }
 
 h2 {
+  color: #AE8625;
   margin: 10% auto;
   font-family: 'Jost', sans-serif;
+}
+
+h3 {
+  color: initial;
+  text-align: center;
+  font-family: serif;
+  margin: 30px;
+}
+
+h6 {
+  color: #B88A44;
+  text-align: center;
+  font-size: 10px;
+}
+
+a .card .card-header {
+  color: #926F34;
+  border-bottom: 1px solid #DFBD69;
+  background-color: rgba(255, 215, 0, 0.05);
 }
 
 .card {
@@ -22,10 +42,14 @@ h2 {
   margin: 6% auto;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 3px;
+  border: 1px solid #DFBD69;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 nav {
   box-shadow: 2px 2px 4px black;
+  background-color: #D2AC47;
 }
 
 nav .c1 {
@@ -38,12 +62,13 @@ nav .c1 {
   font-size: 10px;
 }
 
-p {
+a .card .card-text {
   border: 0px solid white;
-  border-radius: 1px;
-  padding: 2px;
   white-space: pre-wrap;
-  font-family: sans-serif;
+}
+
+a .card {
+  text-decoration: none;
 }
 
 ol {
@@ -85,29 +110,17 @@ ol li {
   }
 }
 
-
-h6 {
-  text-align: center;
-  font-size: 10px;
-}
-
 strong {
   color: #00BCD4;
 }
 
-h3 {
-  color: initial;
-  text-align: center;
-  font-family: serif;
-  margin: 30px;
-}
-
 footer h5 {
+  color: #AE8625;
   margin: 5% auto;
 }
 
 footer {
-  border-top: 2px solid grey;
+  border-top: 5px solid #E0AA3E;
 }
 
 footer .connects {
@@ -154,7 +167,7 @@ footer .connects span {
   /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #D4AF37;
   /* Black*/
   overflow-x: hidden;
   /* Disable horizontal scroll */
@@ -169,14 +182,16 @@ footer .connects span {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: rgba(255, 255, 255, 1);
   display: block;
-  transition: 0.3s;
+  transition: 0.7s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
+  font-size: 30px;
   color: #f1f1f1;
+  text-decoration: underline;
 }
 
 /* Position and style the close button (top right corner) */
