@@ -189,9 +189,9 @@ footer .connects span {
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-font-size: 30px;
+  font-size: 30px;
   color: #f1f1f1;
-text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Position and style the close button (top right corner) */
