@@ -34,7 +34,7 @@ h6 {
 a .card .card-header {
   color: #926F34;
   border-bottom: 1px solid #DFBD69;
-  background-color: rgba(255, 215, 0, 0.05);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .card {
@@ -189,9 +189,9 @@ footer .connects span {
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-  font-size: 30px;
+font-size: 30px;
   color: #f1f1f1;
-  text-decoration: underline;
+text-decoration: underline;
 }
 
 /* Position and style the close button (top right corner) */
