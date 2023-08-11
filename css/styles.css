@@ -1,15 +1,5 @@
 .container-fluid {
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
-h1 {
-  font-size: 2em;
-  font-family: 'Forum', 'Lato', 'Georgia', serif;
-  text-decoration: none;
-  border: 0px solid lightgrey;
-  border-radius: 5px;
-  margin: 5% auto;
-  white-space: pre-wrap;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 h2 {
