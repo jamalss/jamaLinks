@@ -35,6 +35,7 @@ a .card .card-header {
   border: 1px solid #DFBD69;
   cursor: pointer;
   text-decoration: none;
+  height: 175px;
 }
 
 nav {
