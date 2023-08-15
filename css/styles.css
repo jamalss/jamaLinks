@@ -2,6 +2,10 @@
   background-color: rgba(255, 255, 255, 0.7);
 }
 
+.jumbotron {
+  background-color: rgba(255, 255, 255, 0);
+}
+
 h2 {
   color: #AE8625;
   margin: 10% auto;
@@ -9,10 +13,13 @@ h2 {
 }
 
 h3 {
-  color: initial;
+  color: #AE8625;
   text-align: center;
-  font-family: serif;
-  margin: 30px;
+}
+
+h4 {
+  color: #B88A44;
+  text-align: center;
 }
 
 h6 {
