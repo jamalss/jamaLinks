@@ -8,7 +8,9 @@
 
 .itemDesc {
   overflow: auto;
-  height: 400px;
+  height: 250px;
+  width: 300px;
+  margin: 10% auto;
 }
 
 h2 {
