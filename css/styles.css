@@ -6,6 +6,11 @@
   background-color: rgba(255, 255, 255, 0);
 }
 
+.itemDesc {
+  overflow: auto;
+  height: 400px;
+}
+
 h2 {
   color: #AE8625;
   margin: 10% auto;
