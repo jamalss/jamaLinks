@@ -26,15 +26,34 @@
   color: white;
 }
 
+.featured {
+	margin: 6%;
+}
+
+ol li {
+      cursor: pointer;
+    }
+
+ul li {
+	color: grey;
+}
+
+.btn-sm {
+	margin: 10% auto;
+}
+
 h2 {
   color: #AE8625;
   margin: 10% auto;
   font-family: 'Jost', sans-serif;
 }
 
-h3 {
+span {
   color: #AE8625;
   text-align: center;
+font-size: 16px;
+display: block;
+margin: 7% auto;
 }
 
 h4 {
@@ -63,7 +82,14 @@ a .card .card-header {
   cursor: pointer;
   text-decoration: none;
   height: 175px;
+  box-shadow: 1px 1px 4px grey;
 }
+
+.card:hover {
+box-shadow: 3px 3px 4px grey;
+
+}
+
 
 nav {
   box-shadow: 2px 2px 4px black;
