@@ -6,6 +6,10 @@
   background-color: rgba(255, 255, 255, 0);
 }
 
+.closebtn {
+  font-size: 27px;
+}
+
 .itemDesc {
   overflow: auto;
   height: 250px;
@@ -27,19 +31,19 @@
 }
 
 .featured {
-	margin: 6%;
+  margin: 6%;
 }
 
 ol li {
-      cursor: pointer;
-    }
+  cursor: pointer;
+}
 
 ul li {
-	color: grey;
+  color: grey;
 }
 
 .btn-sm {
-	margin: 10% auto;
+  margin: 10% auto;
 }
 
 h2 {
@@ -48,12 +52,12 @@ h2 {
   font-family: 'Jost', sans-serif;
 }
 
-span {
+.itd {
   color: #AE8625;
   text-align: center;
-font-size: 16px;
-display: block;
-margin: 7% auto;
+  font-size: 16px;
+  display: block;
+  margin: 7% auto;
 }
 
 h4 {
@@ -86,7 +90,7 @@ a .card .card-header {
 }
 
 .card:hover {
-box-shadow: 3px 3px 4px grey;
+  box-shadow: 3px 3px 4px grey;
 
 }
 
@@ -121,6 +125,10 @@ ol {
 
 ol li {
   font-size: 20px;
+}
+
+.smedia {
+  display: inline;
 }
 
 .first {
