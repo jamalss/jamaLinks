@@ -8,10 +8,10 @@
 
 .intro {
   font-family: 'Raleway', 'Didact+Gothic', 'Quicksand', sans-serif;
-  font-size: 16px;
-  border-bottom: 1px solid white;
-  border-top: 1px solid white;
-  padding: 5% auto;
+font-size: 16px;
+border-bottom: 1px solid white;
+border-top: 1px solid white;
+padding: 5% auto;
 }
 
 .closebtn {
@@ -67,8 +67,8 @@ h3 {
 
 
 .blogPost {
-  font-size: 1.5em;
-  font-kerning: initial;
+	font-size: 1.5em;
+	font-kerning: initial;
 }
 
 .itd {
@@ -104,7 +104,8 @@ a .card .card-header {
   border: 1px solid #DFBD69;
   cursor: pointer;
   text-decoration: none;
-  height: 175px;
+  height: 250px;
+  overflow: auto;
   box-shadow: 0px 0px 0px white;
   border-top-left-radius: 26px;
   border-bottom-right-radius: 26px;
@@ -148,19 +149,19 @@ ol li {
 }
 
 .imgPic {
-  width: 78%;
-  margin: 2% auto;
-  border-top-left-radius: 26px;
-  border-bottom-right-radius: 26px;
+	width: 78%;
+	margin: 2% auto;
+	border-top-left-radius: 26px;
+	border-bottom-right-radius: 26px;
 }
 
 .img {
-  border-top-left-radius: 26px;
-  border-bottom-right-radius: 26px;
+	border-top-left-radius: 26px;
+	border-bottom-right-radius: 26px;
 }
 
 .itemCol {
-  margin-top: 4%;
+	margin-top: 4%;
 }
 
 .smedia {

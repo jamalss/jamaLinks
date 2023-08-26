@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eduItem1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Jost&family=Quicksand&family=Raleway&family=Tajawal&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="res/chartist.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="css/bootstrap5.css" rel="stylesheet" type="text/css">
+  <link href="css/bootstrap4.css" rel="stylesheet" type="text/css">
+  <link href="css/styles.css" rel="stylesheet" type="text/css">
+  <script src="js/jquery-3.4.1.js"></script>
+  <script src="js/scripts.js"></script>
+  <style class="demo">
+    body {
+      /* The image used */
+      background-image: url("img/bg1.jpg");
+
+      /* Set a specific height */
+      min-height: 500px;
+
+      /* Create the parallax scrolling effect */
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      font-family: 'Didact+Gothic', 'Quicksand', sans-serif;
+    }
+
+    .btn {
+      display: inline;
+    }
+  </style>
+</head>
+<div id="mySidenav" class="sidenav">
+  <img src="img/jamaLinks3.png" alt="Logo" style="width:100%;" class="img-responsive rounded">
+  <a href="javascript:void(0)" class="text-dark closebtn" onclick="closeNav()">&times;</a>
+  <a href="educational.html">Educational</a>
+  <a href="health.html">Health</a>
+  <a href="home.html">Home</a>
+  <a href="garden.html">Garden</a>
+  <a href="office.html">Office</a>
+  <a href="vehicle.html">Vehicle</a>
+  <a href="christian.html">Christian</a>
+  <a href="other.html">Other</a>
+</div>
+<!-- Use any element to open the sidenav -->
+
+<body>
+  <nav class="navbar navbar-expand-sm">
+    <div class="c1 container-fluid">
+      <span class="text-white navbar-text"><a href="index.html"><i class="fa fa-home" style="font-size:36px;color:white;text-shadow:2px 2px 4px #000;"></i></a></span>
+      <a class="navbar-brand" href="#">
+        <img src="img/jamaLinks2.png" alt="Logo" style="width:50px;" class="rounded-pill">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" onclick="openNav()">
+        <span class="navbar-toggler-icon"><i class="fa fa-bars" style="font-size:36px;color:white;text-shadow:2px 2px 4px #000;"></i></span>
+      </button>
+    </div>
+  </nav>
+  <div class="container-fluid" id="main">
+    <!-- Carousel -->
+    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+      <!-- Indicators/dots -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+      </div>
+      <!-- The slideshow/carousel -->
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="img/jamaLinks.png" alt="Los Angeles" class="d-block w-100">
+          <div class="carousel-caption">
+            <span></span>
+            <p class="demo"></p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="img/jamaLinks2.png" alt="Chicago" class="d-block w-100">
+          <div class="carousel-caption">
+            <span></span>
+            <p class="demo"></p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="img/jamaLinks3.png" alt="New York" class="d-block w-100">
+          <div class="carousel-caption">
+            <span></span>
+            <p class="demo"></p>
+          </div>
+        </div>
+      </div>
+      <!-- Left and right controls/icons -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+    <div class="container text-center">
+      <h2 class="text-center">EducationaLinks</h2>
+      <h3 class="text-center">ITEM #1</h3>
+      <p class="blogPost">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies porttitor dui sed scelerisque. Aliquam lacinia sapien leo, et malesuada sem finibus in. Maecenas elementum luctus ex</p>
+      <ol class="text-left">
+        <li class="textarea">Vestibulum eleifend sapien quis eros sagittis, eu consequat risus condimentum. </li>
+        <li class="textarea">Quisque posuere facilisis risus eu ornare. Nulla vitae diam gravida, sodales libero tincidunt, molestie magna.</li>
+        <li class="textarea">Aenean feugiat interdum mauris, eget fringilla nibh vehicula eu. Vestibulum mauris risus, mollis eu venenatis eget, rutrum a tellus. </li>
+        <li class="textarea">Duis erat sem, egestas at rhoncus sit amet, finibus finibus ante. Nunc dapibus cursus ligula nec cursus.</li>
+        <li class="textarea">Vivamus elementum nisi dui, ut molestie libero dapibus id. Nunc vel nisl turpis. In hac habitasse platea dictumst.
+        </li>
+        <li class="textarea">In hac habitasse platea dictumst. Morbi vehicula eros in ullamcorper bibendum. Proin hendrerit aliquet hendrerit. </li>
+        <li class="textarea">Sed non eros cursus, lacinia sapien quis, maximus elit. Phasellus semper tempus tellus eu porta. Proin in leo tellus. </li>
+        <li class="textarea">Ut laoreet mattis mollis. Vestibulum ut odio fringilla, pellentesque est et, commodo nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. </li>
+        <li class="textarea">Nunc commodo lorem erat, vitae elementum ex egestas nec. In id blandit orci. Pellentesque ullamcorper nibh eget nisl sagittis tincidunt. </li>
+        <li class="textarea">Integer semper diam enim, sit amet congue leo vestibulum in. Vestibulum porttitor orci ante, vulputate lobortis nunc efficitur at. Vestibulum euismod eu felis a accumsan. Donec tincidunt porta consequat.</li>
+      </ol>
+    </div>
+  </div>
+  <footer class="page-footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <h5 class="text">Company Bio</h5>
+          <p class="#">Created with you in mind, JamaLinks links you to your world, your needs and wants, and the things that you love. So whatever it is that you're looking for online, we provde you with the right links to that which you desire.</p>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <h5 class="text">Connect</h5>
+          <div class="connects">
+            <span class="smedia"><a href="#"><i class="fa fa-github-square" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
+            <span class="smedia"><a href="https://api.whatsapp.com/send?phone=17587220881"><i class="fa fa-whatsapp" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
+            <span class="smedia"><a href="https://pin.it/7MOCiJB"><i class="fa fa-pinterest-square" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
+            <span class="smedia"><a href="https://instagram.com/jamalinks758?igshid=MmIzYWVlNDQ5Yg=="><i class="fa fa-instagram" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
+            <span class="smedia"><a href="textarea"><i class="fa fa-facebook" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <h5 class="text">Credits</h5>
+          <ul style="list-style-type: none;">
+            <li>Website made using <a class="text" href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">Bootstrap</a></li>
+            <li>Logo made using <a class="text" href="https://www.canva.com/design/DAFrAiKDCzI/QdgdYH7WNQ7cNV_uGSfFTA/edit?utm_content=DAFrAiKDCzI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">Canva</a></li>
+            <li>Background by <a class="text" href="https://unsplash.com/photos/nW4c716rEsg?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink">Micheal Lou</a> on UnSplaah</li>
+            <li><a class="text" href="#!"></a></li>
+            <li><a class="text" href="#!"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <img alt="Logo" src="img/jamaLinks2.png" class="img-bottom img-responsive mx-auto d-block rounded-pill" style="width: 60px; margin: 0% auto;">
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script>
+    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }
+
+    /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+      document.body.style.backgroundColor = "white";
+    }
+  </script>
+</body>
+
+</html>
