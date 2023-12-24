@@ -133,7 +133,7 @@ a .card .card-header {
   color: #926F34;
   border-bottom: 1px solid #DFBD69;
   background-color: rgba(255, 255, 255, 0.8);
-  border-top-left-radius: 26px;
+  border-top-left-radius: 24px;
 }
 
 b {
@@ -150,8 +150,8 @@ b {
   height: 250px;
   overflow: auto;
   box-shadow: 0px 0px 0px white;
-  border-top-left-radius: 26px;
-  border-bottom-right-radius: 26px;
+  border-top-left-radius: 24px;
+  border-bottom-right-radius: 24px;
 }
 
 .card:hover {
@@ -195,6 +195,17 @@ ol li {
   color: grey;
   font-size: 18px;
   white-space: pre-wrap;
+}
+
+.navbar- {
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 2px solid white;
+  border-radius: 0.25rem;
+  transition: box-shadow 0.5s ease-in-out;
 }
 
 .imgPic {
