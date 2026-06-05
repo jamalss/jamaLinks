@@ -1,432 +1,1006 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="p:domain_verify" content="9cfea305ecd52ccb3be2b30a512e5e8f" />
+  <meta name="p:domain_verify" content="9cfea305ecd52ccb3be2b30a512e5e8f">
   <title>JamaLinks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Jost&family=Quicksand&family=Raleway&family=Tajawal&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="res/bootstrap@5.0.0-alpha2.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="res/chartist.min.css">
-  <link href="css/bootstrap5.css" rel="stylesheet" type="text/css">
-  <link href="css/bootstrap4.css" rel="stylesheet" type="text/css">
-  <link href="css/styles.css" rel="stylesheet" type="text/css">
-  <script src="js/jquery-3.4.1.js"></script>
-  <script src="js/scripts.js"></script>
-  <style class="demo">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────── */
+    :root {
+      --bg:        #0a0a09;
+      --surface:   #111110;
+      --border:    rgba(215,158,6,0.18);
+      --gold:      #D79E06;
+      --gold-soft: rgba(215,158,6,0.55);
+      --text:      #e8e3d8;
+      --muted:     #7a7569;
+      --white:     #f5f2ec;
+      --radius:    4px;
+      --nav-h:     64px;
+    }
+
+    /* ── RESET ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      /* The image used */
-      background-image: url("img/bg2.png");
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: default;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
 
-      /* Set a specific height */
-      min-height: 500px;
-
-      /* Create the parallax scrolling effect */
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-
-      font-family: 'Didact+Gothic', 'Quicksand', sans-serif;
+    /* ── NOISE OVERLAY ──────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: .5;
     }
 
-      {
-      /* The image used */
-      background-image: url("img/jamaLinks2.png");
+    /* ── NAV ────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 900;
+      background: linear-gradient(to bottom, rgba(10,10,9,.95) 0%, rgba(10,10,9,0) 100%);
+      backdrop-filter: blur(0px);
+      transition: backdrop-filter .3s, background .3s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,9,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: .18em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .nav-links a {
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      font-size: .75rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      border: 1px solid var(--gold-soft);
+      color: var(--gold);
+      padding: 9px 22px;
+      border-radius: var(--radius);
+      transition: background .2s, color .2s;
+    }
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--text);
+      transition: .3s;
+    }
 
-      /* Set a specific height */
-      min-height: 200px;
+    /* ── HERO ───────────────────────────────────────── */
+    #hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(215,158,6,.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-ring {
+      position: absolute;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      border: 1px solid rgba(215,158,6,.08);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: spin 30s linear infinite;
+    }
+    .hero-ring-2 {
+      width: 340px; height: 340px;
+      animation-duration: 20s;
+      animation-direction: reverse;
+      border-color: rgba(215,158,6,.05);
+    }
+    @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+    .hero-inner { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: .68rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp .8s .2s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -.01em;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp .9s .4s forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      max-width: 500px;
+      margin: 24px auto 0;
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp .9s .6s forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 48px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .9s .8s forwards;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg);
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.12);
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold-soft); color: var(--gold); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s forwards;
+    }
+    .hero-scroll span {
+      font-size: .62rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold-soft), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: .3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ── DIVIDER ────────────────────────────────────── */
+    .divider {
       width: 100%;
-
-      /* Create the parallax scrolling effect */
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-
-      font-family: 'Didact+Gothic', 'Quicksand', sans-serif;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
     }
 
-    .jumbotron-fluid {
-      background-color: rgba(255, 255, 255, 0);
-      border-top-left-radius: 24px;
-      border-bottom-right-radius: 24px;
+    /* ── SECTION BASE ───────────────────────────────── */
+    section { padding: 100px 40px; }
+    .section-label {
+      font-size: .65rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-top: 12px;
+      max-width: 500px;
+    }
+    .section-head { margin-bottom: 60px; }
+
+    /* ── MARQUEE BAND ───────────────────────────────── */
+    .marquee-band {
+      padding: 18px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 0 40px;
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .marquee-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    /* ── FEATURED STORE ─────────────────────────────── */
+    #store { max-width: 1100px; margin: 0 auto; }
+    .store-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .store-visual {
+      background: var(--surface);
+      aspect-ratio: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .store-visual-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a17 0%, #0f0f0e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      color: rgba(215,158,6,.15);
+      letter-spacing: -.02em;
+      font-style: italic;
+    }
+    /* If the user adds img/collage0.png back, it'll show here */
+    .store-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .85;
+      transition: opacity .4s, transform .6s;
+    }
+    .store-visual:hover img { opacity: 1; transform: scale(1.03); }
+    .store-info {
+      background: var(--surface);
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .store-tag {
+      font-size: .65rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .store-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .store-desc {
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.9;
+      margin-bottom: 40px;
+    }
+    .store-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .75rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      transition: background .2s, color .2s;
+      align-self: flex-start;
+    }
+    .store-link:hover { background: var(--gold); color: var(--bg); }
+    .store-link svg { transition: transform .2s; }
+    .store-link:hover svg { transform: translateX(4px); }
+
+    /* ── CATEGORIES ─────────────────────────────────── */
+    #categories { max-width: 1100px; margin: 0 auto; }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .cat-card {
+      background: var(--surface);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: background .25s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .cat-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+    .cat-card:hover { background: #161614; }
+    .cat-card:hover::after { transform: scaleX(1); }
+    .cat-icon {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+    .cat-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: .03em;
+    }
+    .cat-desc {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .cat-arrow {
+      margin-top: auto;
+      color: var(--gold);
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity .2s, transform .2s;
+    }
+    .cat-card:hover .cat-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ── ABOUT ──────────────────────────────────────── */
+    #about { max-width: 1100px; margin: 0 auto; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-values {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-top: 40px;
+    }
+    .value-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .value-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .85rem;
+      color: var(--gold);
+      letter-spacing: .1em;
+      padding-top: 2px;
+      flex-shrink: 0;
+      width: 28px;
+    }
+    .value-text strong {
+      display: block;
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .value-text span {
+      font-size: .83rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-box {
+      aspect-ratio: 3/4;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .about-box-inner {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-style: italic;
+      color: rgba(215,158,6,.08);
+      user-select: none;
+    }
+    .about-stat {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--gold);
+      color: var(--bg);
+      padding: 20px 24px;
+      border-radius: 6px;
+    }
+    .about-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .about-stat-label {
+      font-size: .65rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      opacity: .75;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 64px 40px 40px;
+    }
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-brand-desc {
+      font-size: .83rem;
+      color: var(--muted);
+      line-height: 1.85;
+      max-width: 320px;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .social-btn {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 1rem;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .social-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(215,158,6,.07);
+    }
+    .footer-col-title {
+      font-size: .65rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: .83rem;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 32px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: .72rem;
+      color: var(--muted);
+      letter-spacing: .06em;
+    }
+    .footer-bottom a { color: var(--muted); transition: color .2s; }
+    .footer-bottom a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ─────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MOBILE NAV DRAWER ──────────────────────────── */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,9,.97);
+      z-index: 800;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: .04em;
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 80px 24px; }
+      .store-card { grid-template-columns: 1fr; }
+      .store-visual { aspect-ratio: 16/9; }
+      .store-info { padding: 40px 32px; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-visual { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    @media (max-width: 500px) {
+      .cat-grid { grid-template-columns: 1fr 1fr; }
+      .hero-title { font-size: 3.2rem; }
     }
   </style>
 </head>
-
 <body>
-  <div id="mySidenav" class="sidenav">
-    <img src="img/jamaLinks3.png" alt="Logo" style="width:100%;" class="img-responsive rounded">
-    <a href="javascript:void(0)" class="text-secondary closebtn" onclick="closeNav()">&times;</a>
-    <!--
-    <a href="01educational.html">Educational</a>
-    <ul list-style-type="disc" class="text-left">
-      <li class="text-left"><a href="01loctote.html" class="text-left">Loctote Bags</li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-    </ul>
-    <a href="health.html">Health</a>
-    <ul list-style-type="disc" class="text-left">
-      <li class="text-left"><a href="02greenNblacks.html" class="text">Green & Blacks</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-    </ul>
-    <a href="home.html">Home</a>
-    <ul list-style-type="disc" class="textarea">
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-    </ul>
-    <a href="garden.html">Garden</a>
-    <ul list-style-type="disc" class="textarea">
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-    </ul>
-    <a href="office.html">Office</a>
-    <ul list-style-type="disc" class="textarea">
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-    </ul>
-    <a href="vehicle.html">Vehicle</a>
-    <ul list-style-type="disc" class="textarea">
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-    </ul>
-    <a href="christian.html">Christian</a>
-    <ul list-style-type="disc" class="textarea">
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-    </ul>
-    <a href="other.html">Other</a>
-    <ul list-style-type="disc" class="textarea">
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-      <li class="text-left"><a href="text" class="text">#</a></li>
-    </ul>
--->
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#store" onclick="closeMobile()">Store</a>
+    <a href="#categories" onclick="closeMobile()">Categories</a>
+    <a href="#about" onclick="closeMobile()">About</a>
+    <a href="https://api.whatsapp.com/send?phone=17587220881" onclick="closeMobile()">Contact</a>
   </div>
-  <!-- Use any element to open the sidenav -->
 
-
-  <nav class="navbar navbar-expand-sm navbar-dark">
-    <div class="c1 container-fluid">
-      <span class="text-white navbar-text"><a href="index.html"><i class="fa fa-home" style="font-size:36px;color:white;text-shadow:2px 2px 4px #000;"></i></a></span>
-      <a class="navbar-brand" href="#">
-        <img src="img/jamaLinks2.png" alt="Logo" style="display: inline; width: 40px;" class="rounded-pill shadow" onclick="openNav()">
-      </a>
-      <button class="text-warning shadow navbar-" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" onclick="openNav()">
-        <span class="navbar-toggler-icon">
-          <!--<i class="fa fa-bars" style="font-size:36px;color:white;text-shadow:2px 2px 4px #000;"></i>--></span>
-      </button>
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">Jama<span>Links</span></div>
+    <ul class="nav-links">
+      <li><a href="#store">Store</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a href="https://api.whatsapp.com/send?phone=17587220881" class="nav-cta">Contact</a>
+    <div class="hamburger" id="menuBtn" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
     </div>
   </nav>
-  <div class="container-fluid" id="main">
-    <!-- Carousel -->
-    <div id="demo" class="carousel slide" data-bs-ride="carousel">
-      <!-- Indicators/dots -->
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring hero-ring-2"></div>
+
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Caribbean · Curated · Connected</div>
+      <h1 class="hero-title">Jama<em>Links</em></h1>
+      <p class="hero-sub">Introducing innovative, interesting, and exciting products and services — carefully curated for the way you live.</p>
+      <div class="hero-actions">
+        <a href="#store" class="btn-primary">Browse Store</a>
+        <a href="#categories" class="btn-ghost">Explore Categories</a>
       </div>
-      <!-- The slideshow/carousel -->
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="img/collage0.png" alt="Los Angeles" class="d-block mx-auto w-50">
-          <div class="carousel-caption">
-            <h3></h3>
-            <p class="demo"></p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="img/jamaLinks3.png" alt="Chicago" class="d-block mx-auto w-50">
-          <div class="carousel-caption">
-            <h3></h3>
-            <p class="demo"></p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="img/jamaLinks2.png" alt="New York" class="d-block mx-auto w-50">
-          <div class="carousel-caption">
-            <h3></h3>
-            <p class="demo"></p>
-          </div>
-        </div>
-      </div>
-      <!-- Left and right controls/icons -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </button>
     </div>
-    <div class="container-fluid text-center">
-      <div class="jumbotron-fluid text-center">
-        <!--<img src="img/#.png" alt="#" class="img img-responsive img-thumbnail/circle/rounded">-->
-        <h2 class="p-3">Welcome to JamaLinks!</h2>
-        <div class="intro border-2" style="##">
-          <p class="#">Our website is dedicated to introducing you to innovative, interesting, and/or exciting products and/or services that:</p>
-          <ul class="text-dark" style="##">
-            <li class="text-left text-dark">are interesting or fun to use or wear</li>
-            <li class="text-left text-dark">may help to improve your quality of life</li>
-            <li class="text-left text-dark">items to help you work smarter and not harder</li>
-            <li class="text-left text-dark">help you get the job done differently</li>
-          </ul>
-          <p class="##" style="##">Products on Shopify are mainly POD items for you to enjoy. Others are part of affiliate programs which I would gain a small commission from with the products and/or services being offered. Please Enjoy!
-          </p>
-        </div>
-        <h3 class="featured">Featured Products, Stores and Links</h3>
 
-        <div class="row">
-          <div class="col">
-            <a href="https://ec415a-3.myshopify.com/">
-              <div class="textarea">
-                <img src="img/collage0.png" alt="#" class="imgPic img-responsive img-rounded d-block w-100 shadow">
-                <button style="border: 1px solid darkgoldenrod; border-radius: 25px; color: darkgoldenrod; margin-top: 5%;" class="text-center btn btn-block btn-default">Browse Shopify Store</button>
-              </div>
-            </a>
-          </div>
-          <div class="col">
-            <!--
-            <a href="#.html">
-              <div class="textarea">
-                <img src="img/jamaLinks00.png" alt="#" class="imgPic img-responsive img-rounded d-block w-100 shadow">
-                <h4 class="text-center text-secondary">item2</h4>
-              </div>
-            </a>
-            -->
-          </div>
-        </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
 
-        <div class="row">
-          <div class="col">
-            <!--
-            <a href="#.html">
-              <div class="textarea">
-                <img src="img/jamaLinks00.png" alt="#" class="imgPic img-responsive img-rounded d-block w-100 shadow">
-                <h4 class="text-center text-secondary">item3</h4>
-              </div>
-            </a>
-            -->
-          </div>
-          <div class="col">
-            <!--
-            <a href="#.html">
-              <div class="textarea">
-                <img src="img/jamaLinks00.png" alt="#" class="imgPic img-responsive img-rounded d-block w-100 shadow">
-                <h4 class="text-center text-secondary">item4</h4>
-              </div>
-            </a>
-            -->
-          </div>
-        </div>
-
-        <!--
-        <h4 class="text-secondary">Cleaning Gel for Car, PC, Laptops, Cameras</h4>
-        <div class=" row">
-          <div class="col-md-4 col-lg-4">
-            <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ss&ref=as_ss_li_til&ad_type=product_link&tracking_id=jamal0cc-20&language=en_US&marketplace=amazon&region=US&placement=B081T7N948&asins=B081T7N948&linkId=33d94bfbcb189a7ec982304a212544c6&show_border=true&link_opens_in_new_window=true"></iframe>
-          </div>
-          <div class="col-md-8 col-lg-8">
-            <div class="itemDesc">
-              <p class="text-info">Item Description</p>
-              <ul class="text-info text-left">
-                <li class="textarea">PERFECT CAR CLEANING TOOL: Cleaning gel is designed to clean car air vents, steering wheels, console panel, storage bins, cup holder, door handles, dashboards and other other hard-to-reach spaces.</li>
-                <li class="textarea">EASY TO USE: Push car cleaning gel into any little cracks, press car vent cleaner on and the dust would be carried away. You can also press the keyboard cleaner slightly on the keyboard surface and then pull out slowly, the dust would be carried away with the cleaning gel. (Note: don't press the cleaning gel too hard, especially on mechanical keyboard).</li>
-                <li class="textarea">ECO-FRIENDLY: This keyboard cleaner is made of cleaning gel, smells sweet with lightly fragrance. The car cleaning kit can easily pick up dust.</li>
-                <li class="textarea">REUSABLE: This Auto car detailing cleaning gel can be used for multiple times until the gel turns to black. Please put the gel into the sealed box after use and store it in a cool dry place. DO NOT use car vent cleaner to wipe the cellphone screen or computer monitor. (NOTE: don’t wash the universal cleaning gel with water.)</li>
-                <li class="textarea">MULTIPLE USES: The Automotive dust cleaning gel can not only clean the car vents, dashboard vents, gear shifts, knobs, door handles, air vents, CD slots, cup holders, keyholes,but also the home and office, PC computer keyboard, printer, cell phone, calculator, TV remote and furniture. The suitable surface must be water resistant, or the dust removal for car would stick to it.</li>
-              </ul>
-              <button class="btn btn-info btn-lg btn-block><a href=" https://www.amazon.com/Cleaning-Universal-Detailing-Automotive-Interior/dp/B081T7N948?pd_rd_w=rgUtn&content-id=amzn1.sym.309d45c5-3eba-4f62-9bb2-0acdcf0662e7&pf_rd_p=309d45c5-3eba-4f62-9bb2-0acdcf0662e7&pf_rd_r=V1CXGJSE1TKE4YK10627&pd_rd_wg=MP0v9&pd_rd_r=eb79be01-b4c0-4816-89a1-b120e23c17ea&pd_rd_i=B081T7N948&psc=1&linkCode=ll1&tag=jamal0cc-20&linkId=8e3c758adbade99c3ebefef9a9e44056&language=en_US&ref_=as_li_ss_tl">Read more/Purchase</a></button>
-            </div>
-          </div>
-        </div>-->
-
-        <!--
-        <div class="row my-4">
-          <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0">
-            <a href="01educational.html" class="text">
-              <div class="card">
-                <h5 class="card-header" style="color: #926F34;">Educational Links</h5>
-                <div class="card-body cb1">
-                  <h5 class="text-secondary card-title">Necessary school stationery and more</h5>
-                  <p class="card-text">Specials</p>
-                  <p class="card-text text-success"><a href="01loctote.html" class="text-success">Loctote Bag</a></p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
-            <a href="health.html" class="text">
-              <div class="card">
-                <h5 class="card-header">Food & Health Links</h5>
-                <div class="card-body">
-                  <h5 class="text-secondary card-title">Supplements, healthy foods, and more</h5>
-                  <p class="card-text">Specials</p>
-                  <p class="card-text text-success"><a href="02greenNblacks.html" class="text-success">Green & Blacks Chocolate</a></p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
-            <a href="home.html" class="text">
-              <div class="card">
-                <h5 class="card-header">Home & Living Links</h5>
-                <div class="card-body">
-                  <h5 class="text-secondary card-title">Household items, kitchen products, entertainment, and more</h5>
-                  <p class="card-text"></p>
-                  <p class="card-text text-danger"></p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
-            <a href="garden.html" class="text">
-              <div class="card">
-                <h5 class="card-header">Garden & Outdoors Links</h5>
-                <div class="card-body">
-                  <h5 class="text-secondary card-title">Seeds, garden tools, and more</h5>
-                  <p class="card-text"></p>
-                  <p class="card-text text-success"></p>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-	
-        <div class="row my-4">
-          <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0">
-            <a href="office.html" class="text">
-              <div class="card">
-                <h5 class="card-header">Office Stationery Links</h5>
-                <div class="card-body">
-                  <h5 class="text-secondary card-title">Office stationary/supplies and more</h5>
-                  <p class="card-text"></p>
-                  <p class="card-text text-success"></p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
-            <a href="vehicle.html" class="text">
-              <div class="card">
-                <h5 class="card-header">Vehicular Supplies Links</h5>
-                <div class="card-body">
-                  <h5 class="text-secondary card-title">Cleaning supplies, accessories, and more</h5>
-                  <p class="card-text"></p>
-                  <p class="card-text text-success"></p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
-            <a href="christian.html" class="text">
-              <div class="card">
-                <h5 class="card-header">Christian Life Links</h5>
-                <div class="card-body">
-                  <h5 class="text-secondary card-title">Bibles, christian books, and more</h5>
-                  <p class="card-text"></p>
-                  <p class="card-text text-danger"></p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
-            <a href="other.html" class="text">
-              <div class="card">
-                <h5 class="card-header">Miscellaneous Links</h5>
-                <div class="card-body">
-                  <h5 class="text-secondary card-title">Amazon finds, services, real estate, more</h5>
-                  <p class="card-text"></p>
-                  <p class="card-text text-success"></p>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
--->
-
-        <a href="#"><button type="button" class="btn btn-block btn-lg"></button></a>
-      </div>
+  <!-- MARQUEE -->
+  <div class="marquee-band">
+    <div class="marquee-track" id="marqueeTrack">
+      <!-- Items duplicated for seamless loop -->
+      <div class="marquee-item"><span class="marquee-dot"></span>Food &amp; Health</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Home &amp; Living</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Office &amp; Stationery</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Garden &amp; Outdoors</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Vehicular Supplies</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Christian Life</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Educational</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Miscellaneous</div>
+      <!-- dupe -->
+      <div class="marquee-item"><span class="marquee-dot"></span>Food &amp; Health</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Home &amp; Living</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Office &amp; Stationery</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Garden &amp; Outdoors</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Vehicular Supplies</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Christian Life</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Educational</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Miscellaneous</div>
     </div>
   </div>
-  <footer class="page-footer bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-4 col-md-4 col-lg-4">
-          <h5 class="text">Company Bio</h5>
-          <p class="#">JamaLinks is basically, in all honesty, the start of my journey to doing busines online. I built this website with some basic coding knowledge which is mostly self-taught, and it's design is quite simple. I plan on sharing interesting, innovative and exciting products and/or services with you. Please enjoy, and I hope you find something you love. Happy linking!</p>
+
+  <!-- FEATURED STORE -->
+  <section>
+    <div id="store">
+      <div class="section-head reveal">
+        <div class="section-label">Featured</div>
+        <h2 class="section-title">Our Shopify Store</h2>
+        <p class="section-sub">Print-on-demand pieces and handpicked finds — built for those who want something different.</p>
+      </div>
+      <div class="store-card reveal">
+        <div class="store-visual">
+          <!-- If img/collage0.png exists it will render; otherwise shows the text fallback -->
+          <img src="img/collage0.png" alt="JamaLinks Shopify Store" onerror="this.style.display='none'">
+          <div class="store-visual-inner">JL</div>
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-          <h5 class="text">Connect</h5>
-          <div class="connects">
-            <span class="smedia"><a href="https://github.com/"><i class="fa fa-github-square" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
-            <span class="smedia"><a href="https://api.whatsapp.com/send?phone=17587220881"><i class="fa fa-whatsapp" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
-            <span class="smedia"><a href="https://pin.it/7MOCiJB"><i class="fa fa-pinterest-square" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
-            <span class="smedia"><a href="https://instagram.com/jamalinks758?igshid=MmIzYWVlNDQ5Yg=="><i class="fa fa-instagram" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
-            <span class="smedia"><a href="https://www.facebook.com/profile.php?id=61550714277854&mibextid=kFxxJD"><i class="fa fa-facebook" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
-            <span class="smedia"><a href="https://x.com/JamaLinks?t=Z4TP2TqEHlza4ziPdGty7A&s=09"><i class="fa fa-twitter" style="font-size:36px;color:white;text-shadow:2px 2px 4px #D79E06;"></i></a></span>
-          </div>
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-          <h5 class="text">Credits</h5>
-          <ul style="list-style-type: disc;">
-            <li>Website made using <a class="text" href="https://getbootstrap.com/docs/5.0/getting-started/introduction/">Bootstrap</a></li>
-            <li>Logo made using <a class="text" href="https://www.canva.com/design/DAFrAiKDCzI/QdgdYH7WNQ7cNV_uGSfFTA/edit?utm_content=DAFrAiKDCzI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">Canva</a></li>
-            <!--<li><a class="text" href="#!"></a></li>-->
-          </ul>
+        <div class="store-info">
+          <div class="store-tag">Shopify · Print on Demand</div>
+          <h3 class="store-title">Discover<br>Something New</h3>
+          <p class="store-desc">A growing collection of POD items and affiliate picks — things that are interesting to use, help you work smarter, or simply spark joy. New finds added regularly.</p>
+          <a href="https://ec415a-3.myshopify.com/" class="store-link">
+            Browse Store
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
-    <img alt="Logo" src="img/jamaLinks2.png" class="img-bottom img-responsive mx-auto d-block rounded-pill" style="width: 60px; margin: 0% auto;">
-    <!--
-    <div class="p-3 m-4 text-secondary disclaimer" style="##">Please be advised that the owner of this website or it's linked sellers will not be held responsible for any kind of dissatisfaction experienced as a result of purchases made <u class="##" style="##"> without</u> careful review and consideration of the products' and/or services'
-      <ul class="##" style="##">
-        <li class="text-left text-secondary">description, details, and uses (where applicable)</li>
-        <li class="text-left text-secondary">important specifications as it pertains to the use(s) of purchass</li>
-        <li class="text-left text-secondary">return policies where applicable, expiration and/or important dates where applicable, important details as it pertains to the operation and intended use(s) of products and/or services</li>
-      </ul>
-      So please read all details as it pertains to products and/or services before purchasing.
-    </div>
-    -->
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script>
-    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
-    function openNav() {
-      document.getElementById("mySidenav").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
-      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-    }
+  </section>
 
-    /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
-    function closeNav() {
-      document.getElementById("mySidenav").style.width = "0";
-      document.getElementById("main").style.marginLeft = "0";
-      document.body.style.backgroundColor = "white";
+  <div class="divider"></div>
+
+  <!-- CATEGORIES -->
+  <section>
+    <div id="categories">
+      <div class="section-head reveal">
+        <div class="section-label">Browse by Category</div>
+        <h2 class="section-title">What are you<br>looking for?</h2>
+        <p class="section-sub">Every category is a curated collection. Click to explore.</p>
+      </div>
+      <div class="cat-grid reveal">
+        <a href="01educational.html" class="cat-card">
+          <div class="cat-icon">📚</div>
+          <div class="cat-name">Educational</div>
+          <div class="cat-desc">School stationery, learning tools, and more</div>
+          <div class="cat-arrow">Explore →</div>
+        </a>
+        <a href="health.html" class="cat-card">
+          <div class="cat-icon">🌿</div>
+          <div class="cat-name">Food &amp; Health</div>
+          <div class="cat-desc">Supplements, healthy foods, and wellness picks</div>
+          <div class="cat-arrow">Explore →</div>
+        </a>
+        <a href="home.html" class="cat-card">
+          <div class="cat-icon">🏠</div>
+          <div class="cat-name">Home &amp; Living</div>
+          <div class="cat-desc">Household items, kitchen products, entertainment</div>
+          <div class="cat-arrow">Explore →</div>
+        </a>
+        <a href="garden.html" class="cat-card">
+          <div class="cat-icon">🌱</div>
+          <div class="cat-name">Garden &amp; Outdoors</div>
+          <div class="cat-desc">Seeds, garden tools, outdoor essentials</div>
+          <div class="cat-arrow">Explore →</div>
+        </a>
+        <a href="office.html" class="cat-card">
+          <div class="cat-icon">🖊️</div>
+          <div class="cat-name">Office &amp; Stationery</div>
+          <div class="cat-desc">Office supplies and productivity tools</div>
+          <div class="cat-arrow">Explore →</div>
+        </a>
+        <a href="vehicle.html" class="cat-card">
+          <div class="cat-icon">🚗</div>
+          <div class="cat-name">Vehicular Supplies</div>
+          <div class="cat-desc">Cleaning supplies, accessories, and more</div>
+          <div class="cat-arrow">Explore →</div>
+        </a>
+        <a href="christian.html" class="cat-card">
+          <div class="cat-icon">✝️</div>
+          <div class="cat-name">Christian Life</div>
+          <div class="cat-desc">Bibles, christian books, devotional picks</div>
+          <div class="cat-arrow">Explore →</div>
+        </a>
+        <a href="other.html" class="cat-card">
+          <div class="cat-icon">✦</div>
+          <div class="cat-name">Miscellaneous</div>
+          <div class="cat-desc">Amazon finds, services, real estate &amp; more</div>
+          <div class="cat-arrow">Explore →</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section>
+    <div id="about">
+      <div class="about-grid">
+        <div>
+          <div class="section-label reveal">About JamaLinks</div>
+          <h2 class="section-title reveal">Started with<br>a simple <em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)">idea</em></h2>
+          <p class="section-sub reveal" style="margin-top:16px;">JamaLinks began as the start of a journey into online business — built with self-taught coding skills, a genuine love for interesting products, and a desire to share what's worth sharing. Simple, honest, evolving.</p>
+          <div class="about-values">
+            <div class="value-item reveal">
+              <div class="value-num">01</div>
+              <div class="value-text">
+                <strong>Curated with Intent</strong>
+                <span>Only interesting, innovative, or genuinely useful products make the cut.</span>
+              </div>
+            </div>
+            <div class="value-item reveal">
+              <div class="value-num">02</div>
+              <div class="value-text">
+                <strong>Built from Scratch</strong>
+                <span>Every line of this site is self-taught. An ongoing labour of love.</span>
+              </div>
+            </div>
+            <div class="value-item reveal">
+              <div class="value-num">03</div>
+              <div class="value-text">
+                <strong>Caribbean-Made</strong>
+                <span>Proudly built from Saint Lucia, for the world to enjoy.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-visual reveal">
+          <div class="about-box">
+            <img src="img/jamaLinks3.png" alt="JamaLinks" style="width:100%;height:100%;object-fit:cover;opacity:.7;" onerror="this.style.display='none'">
+            <div class="about-box-inner">JL</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">758</div>
+            <div class="about-stat-label">Saint Lucia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">JamaLinks</div>
+        <p class="footer-brand-desc">Discovering and sharing innovative, interesting, and exciting products and services. Started in Saint Lucia, built for everyone. Happy linking.</p>
+        <div class="footer-socials">
+          <a href="https://github.com/" class="social-btn" title="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.51.337 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
+          </a>
+          <a href="https://api.whatsapp.com/send?phone=17587220881" class="social-btn" title="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://pin.it/7MOCiJB" class="social-btn" title="Pinterest">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+          </a>
+          <a href="https://instagram.com/jamalinks758" class="social-btn" title="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61550714277854" class="social-btn" title="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://x.com/JamaLinks" class="social-btn" title="X / Twitter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Categories</div>
+        <ul class="footer-links">
+          <li><a href="01educational.html">Educational</a></li>
+          <li><a href="health.html">Food &amp; Health</a></li>
+          <li><a href="home.html">Home &amp; Living</a></li>
+          <li><a href="garden.html">Garden &amp; Outdoors</a></li>
+          <li><a href="office.html">Office Stationery</a></li>
+          <li><a href="vehicle.html">Vehicular Supplies</a></li>
+          <li><a href="christian.html">Christian Life</a></li>
+          <li><a href="other.html">Miscellaneous</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Connect</div>
+        <ul class="footer-links">
+          <li><a href="https://ec415a-3.myshopify.com/">Shopify Store</a></li>
+          <li><a href="https://api.whatsapp.com/send?phone=17587220881">WhatsApp</a></li>
+          <li><a href="https://instagram.com/jamalinks758">Instagram</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61550714277854">Facebook</a></li>
+          <li><a href="https://x.com/JamaLinks">X / Twitter</a></li>
+          <li><a href="https://pin.it/7MOCiJB">Pinterest</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 JamaLinks · Saint Lucia 🇱🇨</span>
+      <span>Built with <a href="https://getbootstrap.com">Bootstrap</a> · Logo via <a href="https://canva.com">Canva</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Mobile menu
+    function toggleMobile() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    function closeMobile() {
+      document.getElementById('mobileMenu').classList.remove('open');
     }
   </script>
 </body>
-
 </html>
