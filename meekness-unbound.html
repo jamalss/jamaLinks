@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meekness — Root, Branch, and Crown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-dusk:      #150E09;
+    --bg-panel:     #241809;
+    --gold-core:    #FFD23F;
+    --amber:        #F7A72E;
+    --ember:        #E8590C;
+    --crimson:      #D8342A;
+    --maroon:       #7A231B;
+    --parchment:    #F4E9D6;
+    --parchment-2:  #EDE0C8;
+    --ink-soft:     #8A7960;
+    --line:         rgba(244,233,214,0.14);
+
+    --display: 'Fraunces', Georgia, serif;
+    --serif:   'Lora', Georgia, serif;
+    --ui:      'Work Sans', sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-dusk);
+    color:var(--parchment);
+    font-family:var(--serif);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--gold-core); text-decoration-color:rgba(255,210,63,0.4); }
+  a:hover{ color:var(--amber); }
+  ::selection{ background:var(--ember); color:var(--parchment); }
+  :focus-visible{ outline:2px solid var(--gold-core); outline-offset:3px; border-radius:4px; }
+
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
+  .wrap-narrow{ max-width:720px; margin:0 auto; padding:0 24px; }
+
+  #progressBar{
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:linear-gradient(90deg, var(--maroon), var(--ember), var(--gold-core));
+    z-index:60;
+  }
+
+  /* ===================== HERO ===================== */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; overflow:hidden; padding:80px 24px 50px;
+  }
+  .hero-glow{
+    position:absolute; top:50%; left:50%; width:900px; height:900px;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle, rgba(255,210,63,0.20) 0%, rgba(232,89,12,0.10) 35%, rgba(21,14,9,0) 68%);
+    pointer-events:none;
+  }
+  .drift-leaf{ position:absolute; opacity:0.15; animation:drift 24s ease-in-out infinite; pointer-events:none; }
+  .drift-leaf.l1{ top:12%; left:9%;  width:64px; animation-duration:27s; }
+  .drift-leaf.l2{ top:66%; left:6%;  width:44px; animation-duration:20s; animation-delay:-4s; }
+  .drift-leaf.l3{ top:16%; right:9%; width:52px; animation-duration:23s; animation-delay:-10s; }
+  .drift-leaf.l4{ top:68%; right:7%; width:78px; animation-duration:29s; animation-delay:-15s; }
+  @keyframes drift{ 0%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-24px) rotate(9deg);} 100%{transform:translateY(0) rotate(0deg);} }
+  @media (prefers-reduced-motion:reduce){ .drift-leaf{animation:none;} html{scroll-behavior:auto;} }
+
+  .eyebrow{ font-family:var(--ui); font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--amber); margin-bottom:20px; position:relative; z-index:1; }
+  .hero h1{
+    font-family:var(--display); font-style:italic; font-weight:600;
+    font-size:clamp(52px,11vw,108px); line-height:.95; margin:0 0 22px;
+    background:linear-gradient(150deg, var(--gold-core) 0%, var(--amber) 32%, var(--ember) 62%, var(--crimson) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent; position:relative; z-index:1;
+  }
+  .hero p.lede{ font-family:var(--serif); font-style:italic; font-size:clamp(16px,2.4vw,20px); max-width:580px; color:var(--parchment-2); position:relative; z-index:1; }
+  .stat-line{
+    margin-top:30px; font-family:var(--ui); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); position:relative; z-index:1;
+  }
+  .scroll-cue{ margin-top:40px; font-family:var(--ui); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft); display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; z-index:1; }
+  .scroll-cue span{ width:1px; height:28px; background:linear-gradient(var(--amber), transparent); }
+
+  /* ===================== SECTION LABELS ===================== */
+  .part-label{
+    text-align:center; margin:0 auto 8px; position:relative; z-index:2;
+  }
+  .part-label .kicker{ font-family:var(--ui); font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--amber); }
+  .part-label h2{
+    font-family:var(--display); font-style:italic; font-weight:600;
+    font-size:clamp(30px,4.4vw,46px); margin:8px 0 0; background:var(--bg-dusk); display:inline-block; padding:0 18px;
+  }
+  .part-intro{ text-align:center; color:var(--parchment-2); font-size:16px; max-width:56ch; margin:14px auto 0; }
+
+  /* ===================== ROOT / DEFINITION ===================== */
+  .root-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:18px;
+    padding:38px 40px; margin:44px auto 0; position:relative; z-index:2;
+  }
+  .root-card .lead{ font-style:italic; font-size:19px; color:var(--parchment-2); margin:0 0 28px; }
+  .word-study{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:22px 30px; font-family:var(--ui); font-size:14px; color:var(--parchment-2); }
+  .word-study dt{ text-transform:uppercase; letter-spacing:.14em; font-size:11px; color:var(--amber); margin-bottom:6px; }
+  .word-study dd{ margin:0 0 16px; color:var(--parchment); }
+  .word-study .hebrew{ font-size:22px; font-family:var(--serif); }
+  .bdb-list{ margin:0; padding-left:18px; }
+  .bdb-list li{ margin-bottom:4px; }
+
+  /* ===================== VEIN TIMELINE ===================== */
+  .vein-wrap{ position:relative; padding:60px 0 10px; }
+  .vein-line{
+    position:absolute; left:50%; top:0; bottom:0; width:2px; transform:translateX(-50%);
+    background:linear-gradient(180deg, var(--maroon), var(--ember) 35%, var(--amber) 68%, var(--gold-core));
+    opacity:.55;
+  }
+  .vein-row{ position:relative; display:flex; width:100%; margin-bottom:46px; }
+  .vein-row.odd{ justify-content:flex-start; }
+  .vein-row.even{ justify-content:flex-end; }
+  .vein-row::before{ content:''; position:absolute; top:26px; left:44%; width:12%; height:2px; background:var(--dot); opacity:.7; }
+  .vein-row::after{ content:''; position:absolute; top:20px; left:50%; width:13px; height:13px; border-radius:50%; background:var(--dot); transform:translateX(-50%); box-shadow:0 0 0 4px var(--bg-dusk); }
+  .vein-card{
+    width:44%; background:var(--bg-panel); border:1px solid var(--line); border-radius:14px; padding:24px 26px;
+  }
+  .vein-card .num{ font-family:var(--ui); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--dot); margin-bottom:8px; }
+  .vein-card h3{ font-family:var(--display); font-style:italic; font-weight:600; font-size:22px; margin:0 0 12px; color:var(--parchment); }
+  .vein-card blockquote{ margin:0 0 6px; font-style:italic; font-size:15.5px; color:var(--parchment-2); border-left:2px solid var(--dot); padding-left:14px; }
+  .vein-card .ref{ font-family:var(--ui); font-size:12.5px; display:inline-block; margin-bottom:14px; }
+  .vein-card .verse-block:last-child blockquote{ margin-bottom:6px; }
+  .vein-card .note{ margin-top:10px; font-family:var(--ui); font-size:11.5px; color:var(--ink-soft); font-style:italic; }
+
+  @media (max-width:760px){
+    .vein-line, .vein-row::before, .vein-row::after{ display:none; }
+    .vein-row, .vein-row.odd, .vein-row.even{ justify-content:flex-start; }
+    .vein-card{ width:100%; border-left:3px solid var(--dot); }
+  }
+
+  /* ===================== CROWN / FACTS ===================== */
+  .facts-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px;
+    margin-top:44px; position:relative; z-index:2;
+  }
+  .fact-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:14px; padding:22px 22px 20px; text-align:left;
+    border-top:3px solid var(--dot);
+  }
+  .fact-card .letter{ font-family:var(--display); font-style:italic; font-weight:600; font-size:34px; color:var(--dot); line-height:1; margin-bottom:8px; }
+  .fact-card h4{ font-family:var(--ui); font-size:14px; letter-spacing:.02em; margin:0 0 10px; color:var(--parchment); }
+  .fact-card blockquote{ margin:0 0 8px; font-style:italic; font-size:14px; color:var(--parchment-2); }
+  .fact-card .ref{ font-family:var(--ui); font-size:12px; }
+
+  /* ===================== GLEANINGS ===================== */
+  .gleanings{ margin-top:20px; }
+  .gleaning-list{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px 30px; margin-top:34px; }
+  .gleaning-item{ padding:14px 0; border-bottom:1px solid var(--line); }
+  .gleaning-item p{ margin:0 0 4px; font-style:italic; color:var(--parchment-2); font-size:15px; }
+  .gleaning-item a{ font-family:var(--ui); font-size:12px; }
+
+  /* ===================== CLOSING ===================== */
+  .closing{ text-align:center; padding:100px 24px; }
+  .closing blockquote{
+    font-family:var(--display); font-style:italic; font-weight:500;
+    font-size:clamp(24px,4vw,36px); color:var(--parchment); max-width:16ch; margin:0 auto 18px;
+    background:linear-gradient(150deg, var(--gold-core), var(--ember));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .closing .ref{ font-family:var(--ui); font-size:13px; display:block; margin-bottom:40px; }
+  .closing p.reflection{ color:var(--parchment-2); max-width:56ch; margin:0 auto; font-size:16px; }
+
+  footer{ text-align:center; padding:50px 24px 60px; color:var(--ink-soft); font-family:var(--ui); font-size:12.5px; border-top:1px solid var(--line); }
+  footer svg{ width:26px; margin-bottom:14px; opacity:.6; }
+
+  section{ padding:20px 0; }
+
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+</style>
+</head>
+<body>
+
+<div id="progressBar"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="leafshape" d="M50 4 L57 24 L74 14 L67 33 L91 38 L71 49 L86 63 L61 57 L58 79 L50 64 L42 79 L39 57 L14 63 L29 49 L9 38 L33 33 L26 14 L43 24 Z M50 60 L50 96"/>
+  </defs>
+</svg>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <svg class="drift-leaf l1" viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="#E8590C"/></svg>
+  <svg class="drift-leaf l2" viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="#D8342A"/></svg>
+  <svg class="drift-leaf l3" viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="#FFD23F"/></svg>
+  <svg class="drift-leaf l4" viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="#7A231B"/></svg>
+
+  <div class="eyebrow">Root, branch, and crown</div>
+  <h1>Meekness</h1>
+  <p class="lede">A leaf does not fight the season. It turns brilliant, then lets go — patient, unresisting, still rooted to the very end. Scripture calls that meekness.</p>
+  <p class="stat-line">10 blessings · 10 lives · 8 marks — gathered whole, below</p>
+  <div class="scroll-cue"><span></span>Scroll</div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ ROOT ============ -->
+  <section class="reveal">
+    <div class="part-label">
+      <div class="kicker">Part One</div>
+      <h2>The Root</h2>
+    </div>
+    <p class="part-intro">Before meekness can be seen in a life, it has to be understood as a word. This is where it starts — buried in Hebrew soil, centuries before the Sermon on the Mount.</p>
+
+    <div class="root-card">
+      <p class="lead">Meekness is the quality of being patient in the reception of injuries; it stands opposed to malice and revenge.</p>
+      <dl class="word-study">
+        <div>
+          <dt>Strong's</dt><dd class="hebrew">H6035 · עָנָו</dd>
+          <dt>Transliteration</dt><dd>‛ânâv, ‛ânâyv</dd>
+          <dt>Phonetic</dt><dd>aw-nawv'</dd>
+        </div>
+        <div>
+          <dt>BDB definition</dt>
+          <dd><ul class="bdb-list">
+            <li>poor, humble, afflicted, meek</li>
+            <li>poor, needy</li>
+            <li>poor and weak</li>
+            <li>poor, weak and afflicted</li>
+            <li>humble, lowly, meek</li>
+          </ul></dd>
+        </div>
+        <div>
+          <dt>Origin</dt><dd>From H6031</dd>
+          <dt>TWOT entry</dt><dd>1652a</dd>
+          <dt>Part of speech</dt><dd>Noun, masculine</dd>
+        </div>
+        <div>
+          <dt>Strong's definition</dt>
+          <dd>Depressed, figuratively in mind (gentle) or circumstances (needy, especially saintly): humble, lowly, meek, poor. Compare H6041.</dd>
+          <dt>Oxford</dt><dd>Meek: mild.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ BRANCHES: BLESSINGS + LIVES ============ -->
+  <section class="reveal">
+    <div class="vein-wrap">
+      <div class="vein-line" aria-hidden="true"></div>
+
+      <div class="part-label" style="margin-bottom:30px;">
+        <div class="kicker">Part Two</div>
+        <h2>Ten Blessings</h2>
+      </div>
+
+      <!-- Blessing 1 -->
+      <div class="vein-row odd" style="--dot:#FFD23F"><div class="vein-card">
+        <div class="num">Blessing 01</div>
+        <h3>Satisfaction</h3>
+        <div class="verse-block"><blockquote>The meek shall eat and be satisfied: they shall praise the Lord that seek him: your heart shall live for ever.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/psa.22.26.KJV" target="_blank" rel="noopener">Psalm 22:26 KJV</a></div>
+      </div></div>
+
+      <!-- Blessing 2 -->
+      <div class="vein-row even" style="--dot:#FFC23B"><div class="vein-card">
+        <div class="num">Blessing 02</div>
+        <h3>Guidance in Judgment</h3>
+        <div class="verse-block"><blockquote>The meek will he guide in judgment: and the meek will he teach his way.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/psa.25.9.KJV" target="_blank" rel="noopener">Psalm 25:9 KJV</a></div>
+      </div></div>
+
+      <!-- Blessing 3 -->
+      <div class="vein-row odd" style="--dot:#FFAE33"><div class="vein-card">
+        <div class="num">Blessing 03</div>
+        <h3>Knowledge of God</h3>
+        <div class="verse-block"><blockquote>The meek will he guide in judgment: and the meek will he teach his way.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/psa.25.9.KJV" target="_blank" rel="noopener">Psalm 25:9 KJV</a></div>
+        <div class="note">Same verse as Guidance in Judgment — to be taught His way is to be given knowledge of Him.</div>
+      </div></div>
+
+      <!-- Blessing 4 -->
+      <div class="vein-row even" style="--dot:#FA9A2C"><div class="vein-card">
+        <div class="num">Blessing 04</div>
+        <h3>Earth as an Inheritance</h3>
+        <div class="verse-block"><blockquote>But the meek shall inherit the earth; and shall delight themselves in the abundance of peace.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/psa.37.11.KJV" target="_blank" rel="noopener">Psalm 37:11 KJV</a></div>
+        <div class="verse-block"><blockquote>Blessed are the meek: for they shall inherit the earth.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/mat.5.5.KJV" target="_blank" rel="noopener">Matthew 5:5 KJV</a></div>
+      </div></div>
+
+      <!-- Blessing 5 -->
+      <div class="vein-row odd" style="--dot:#F2822A"><div class="vein-card">
+        <div class="num">Blessing 05</div>
+        <h3>Salvation</h3>
+        <div class="verse-block"><blockquote>When God arose to judgment, to save all the meek of the earth. Selah.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/psa.76.9.KJV" target="_blank" rel="noopener">Psalm 76:9 KJV</a></div>
+        <div class="verse-block"><blockquote>For the Lord taketh pleasure in his people: he will beautify the meek with salvation.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/psa.149.4.KJV" target="_blank" rel="noopener">Psalm 149:4 KJV</a></div>
+      </div></div>
+
+      <!-- Blessing 6 -->
+      <div class="vein-row even" style="--dot:#E86D22"><div class="vein-card">
+        <div class="num">Blessing 06</div>
+        <h3>Help from God</h3>
+        <div class="verse-block"><blockquote>The Lord lifteth up the meek: he casteth the wicked down to the ground.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/psa.147.6.KJV" target="_blank" rel="noopener">Psalm 147:6 KJV</a></div>
+      </div></div>
+
+      <!-- Blessing 7 -->
+      <div class="vein-row odd" style="--dot:#DD5720"><div class="vein-card">
+        <div class="num">Blessing 07</div>
+        <h3>Increased Joy</h3>
+        <div class="verse-block"><blockquote>The meek also shall increase their joy in the Lord, and the poor among men shall rejoice in the Holy One of Israel.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/isa.29.19.KJV" target="_blank" rel="noopener">Isaiah 29:19 KJV</a></div>
+      </div></div>
+
+      <!-- Blessing 8 -->
+      <div class="vein-row even" style="--dot:#C9401E"><div class="vein-card">
+        <div class="num">Blessing 08</div>
+        <h3>The Holy Spirit</h3>
+        <div class="verse-block"><blockquote>But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, meekness, temperance: against such there is no law.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/gal.5.22-23.KJV" target="_blank" rel="noopener">Galatians 5:22-23 KJV</a></div>
+      </div></div>
+
+      <!-- Blessing 9 -->
+      <div class="vein-row odd" style="--dot:#AC2A1B"><div class="vein-card">
+        <div class="num">Blessing 09</div>
+        <h3>A Blessing to Others</h3>
+        <div class="verse-block"><blockquote>Brethren, if a man be overtaken in a fault, ye which are spiritual, restore such an one in the spirit of meekness; considering thyself, lest thou also be tempted.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/gal.6.1.KJV" target="_blank" rel="noopener">Galatians 6:1 KJV</a></div>
+      </div></div>
+
+      <!-- Blessing 10 -->
+      <div class="vein-row even" style="--dot:#7A1F1A"><div class="vein-card">
+        <div class="num">Blessing 10</div>
+        <h3>Patience</h3>
+        <div class="verse-block"><blockquote>And the servant of the Lord must not strive; but be gentle unto all men, apt to teach, patient, in meekness instructing those that oppose themselves; if God peradventure will give them repentance to the acknowledging of the truth.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/2ti.2.24-25.KJV" target="_blank" rel="noopener">2 Timothy 2:24-25 KJV</a></div>
+      </div></div>
+
+      <div class="part-label" style="margin:20px 0 30px;">
+        <div class="kicker">Part Three</div>
+        <h2>Ten Lives</h2>
+      </div>
+
+      <!-- Example 1 Abraham -->
+      <div class="vein-row odd" style="--dot:#FFD23F"><div class="vein-card">
+        <div class="num">Life 01</div>
+        <h3>Abraham</h3>
+        <div class="verse-block"><blockquote>And Abram said unto Lot, Let there be no strife, I pray thee, between me and thee, and between my herdmen and thy herdmen; for we be brethren.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/gen.13.8.KJV" target="_blank" rel="noopener">Genesis 13:8 KJV</a></div>
+      </div></div>
+
+      <!-- Example 2 Isaac -->
+      <div class="vein-row even" style="--dot:#FFC23B"><div class="vein-card">
+        <div class="num">Life 02</div>
+        <h3>Isaac</h3>
+        <div class="verse-block"><blockquote>And the herdmen of Gerar did strive with Isaac's herdmen, saying, The water is ours: and he called the name of the well Esek. And they digged another well, and strove for that also: and he called the name of it Sitnah. And he removed from thence, and digged another well; and for that they strove not: and he called the name of it Rehoboth; and he said, For now the Lord hath made room for us, and we shall be fruitful in the land.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/gen.26.20-24.KJV" target="_blank" rel="noopener">Genesis 26:20-24 KJV</a></div>
+      </div></div>
+
+      <!-- Example 3 Moses -->
+      <div class="vein-row odd" style="--dot:#FFAE33"><div class="vein-card">
+        <div class="num">Life 03</div>
+        <h3>Moses</h3>
+        <div class="verse-block"><blockquote>Now the man Moses was very meek, above all the men which were upon the face of the earth.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/num.12.3.KJV" target="_blank" rel="noopener">Numbers 12:3 KJV</a></div>
+      </div></div>
+
+      <!-- Example 4 Gideon -->
+      <div class="vein-row even" style="--dot:#FA9A2C"><div class="vein-card">
+        <div class="num">Life 04</div>
+        <h3>Gideon</h3>
+        <div class="verse-block"><blockquote>And the men of the tribe of Ephraim said to Gideon, "What is this thing that you have done to us, not calling us when you went to fight with Midian?" And they quarreled with him vehemently. But he said to them, "What have I done now in comparison with you? Is not the gleaning of the grapes of your tribe of Ephraim better than the vintage of my clan of Abiezer?" Then their anger toward him subsided when he made this statement.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1588/jdg.8.1-3.AMP" target="_blank" rel="noopener">Judges 8:1-3 AMP</a></div>
+      </div></div>
+
+      <!-- Example 5 Hannah -->
+      <div class="vein-row odd" style="--dot:#F2822A"><div class="vein-card">
+        <div class="num">Life 05</div>
+        <h3>Hannah</h3>
+        <div class="verse-block"><blockquote>Eli said to her, "How long will you make yourself drunk? Get rid of your wine." But Hannah answered, "No, my Lord, I am a woman with a despairing spirit. I have not been drinking wine, but I have poured out my soul before the Lord. Do not regard your maidservant as a wicked and worthless woman, for I have spoken out of my great concern and provocation." Then Eli answered, "Go in peace; and may the God of Israel grant your petition."</blockquote>
+        <a class="ref" href="https://bible.com/bible/1588/1sa.1.12-17.AMP" target="_blank" rel="noopener">1 Samuel 1:13-17 AMP</a></div>
+      </div></div>
+
+      <!-- Example 6 Saul -->
+      <div class="vein-row even" style="--dot:#E86D22"><div class="vein-card">
+        <div class="num">Life 06</div>
+        <h3>Saul</h3>
+        <div class="verse-block"><blockquote>But the children of Belial said, How shall this man save us? And they despised him, and brought him no presents. But he held his peace.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/1sa.10.27.KJV" target="_blank" rel="noopener">1 Samuel 10:27 KJV</a></div>
+      </div></div>
+
+      <!-- Example 7 David -->
+      <div class="vein-row odd" style="--dot:#DD5720"><div class="vein-card">
+        <div class="num">Life 07</div>
+        <h3>David</h3>
+        <div class="verse-block"><blockquote>Let him curse; for the Lord hath bidden him. It may be that the Lord will look on mine affliction, and that the Lord will requite me good for his cursing this day.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/2sa.16.11-12.KJV" target="_blank" rel="noopener">2 Samuel 16:11-12 KJV</a></div>
+      </div></div>
+
+      <!-- Example 8 Paul -->
+      <div class="vein-row even" style="--dot:#C9401E"><div class="vein-card">
+        <div class="num">Life 08</div>
+        <h3>Paul</h3>
+        <div class="verse-block"><blockquote>Now I Paul myself beseech you by the meekness and gentleness of Christ, who in presence am base among you, but being absent am bold toward you.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/2co.10.1.KJV" target="_blank" rel="noopener">2 Corinthians 10:1 KJV</a></div>
+      </div></div>
+
+      <!-- Example 9 Thessalonians -->
+      <div class="vein-row odd" style="--dot:#AC2A1B"><div class="vein-card">
+        <div class="num">Life 09</div>
+        <h3>The Thessalonians</h3>
+        <div class="verse-block"><blockquote>We are bound to thank God always for you, brethren, as it is meet, because that your faith groweth exceedingly, and the charity of every one of you all toward each other aboundeth; so that we ourselves glory in you in the churches of God for your patience and faith in all your persecutions and tribulations that ye endure.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/2th.1.3-4.KJV" target="_blank" rel="noopener">2 Thessalonians 1:3-4 KJV</a></div>
+      </div></div>
+
+      <!-- Example 10 Christ -->
+      <div class="vein-row even" style="--dot:#7A1F1A"><div class="vein-card">
+        <div class="num">Life 10</div>
+        <h3>Jesus Christ</h3>
+        <div class="verse-block"><blockquote>Tell ye the daughter of Sion, Behold, thy King cometh unto thee, meek, and sitting upon an ass, and a colt the foal of an ass.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/mat.21.5.KJV" target="_blank" rel="noopener">Matthew 21:5 KJV</a></div>
+        <div class="verse-block"><blockquote>Take my yoke upon you, and learn of me; for I am meek and lowly in heart: and ye shall find rest unto your souls.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/mat.11.29.KJV" target="_blank" rel="noopener">Matthew 11:29 KJV</a></div>
+        <div class="verse-block"><blockquote>He was oppressed and He was afflicted, yet He did not open His mouth. Like a lamb that is led to the slaughter, and like a sheep that is silent before her shearers, so He did not open His mouth.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1588/isa.53.7.AMP" target="_blank" rel="noopener">Isaiah 53:7 AMP</a></div>
+        <div class="verse-block"><blockquote>...one of them which were with Jesus stretched out his hand, and drew his sword, and struck a servant of the high priest's, and smote off his ear. Then said Jesus unto him, Put up again thy sword into his place: for all they that take the sword shall perish with the sword...</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/mat.26.47-54.KJV" target="_blank" rel="noopener">Matthew 26:47-54 KJV</a></div>
+      </div></div>
+
+    </div>
+  </section>
+
+  <!-- ============ CROWN: FACTS ============ -->
+  <section class="reveal">
+    <div class="part-label">
+      <div class="kicker">Part Four</div>
+      <h2>Eight Marks</h2>
+    </div>
+    <p class="part-intro">Where the stem opens into leaves — eight things scripture says meekness does, spelling out the word itself.</p>
+
+    <div class="facts-grid">
+      <div class="fact-card" style="--dot:#FFD23F"><div class="letter">M</div><h4>It Must Be Sought</h4>
+        <blockquote>Seek ye the Lord, all ye meek of the earth... seek righteousness, seek meekness.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/zep.2.3.KJV" target="_blank" rel="noopener">Zephaniah 2:3 KJV</a></div>
+
+      <div class="fact-card" style="--dot:#FA9A2C"><div class="letter">E</div><h4>A Fruit of the Spirit</h4>
+        <blockquote>Meekness, temperance: against such there is no law.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/gal.5.23.KJV" target="_blank" rel="noopener">Galatians 5:23 KJV</a></div>
+
+      <div class="fact-card" style="--dot:#E86D22"><div class="letter">E</div><h4>Should Be Put On</h4>
+        <blockquote>Put on therefore, as the elect of God... humbleness of mind, meekness, longsuffering.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/col.3.12.KJV" target="_blank" rel="noopener">Colossians 3:12 KJV</a></div>
+
+      <div class="fact-card" style="--dot:#C9401E"><div class="letter">K</div><h4>Should Be Followed</h4>
+        <blockquote>Follow after righteousness, godliness, faith, love, patience, meekness.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/1ti.6.11.KJV" target="_blank" rel="noopener">1 Timothy 6:11 KJV</a></div>
+
+      <div class="fact-card" style="--dot:#7A1F1A"><div class="letter">N</div><h4>Used With Those Who Oppose</h4>
+        <blockquote>In meekness instructing those that oppose themselves.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/2ti.2.25.KJV" target="_blank" rel="noopener">2 Timothy 2:25 KJV</a></div>
+
+      <div class="fact-card" style="--dot:#FFAE33"><div class="letter">E</div><h4>Should Be Demonstrated</h4>
+        <blockquote>Gentle, shewing all meekness unto all men.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/tit.3.2.KJV" target="_blank" rel="noopener">Titus 3:2 KJV</a></div>
+
+      <div class="fact-card" style="--dot:#DD5720"><div class="letter">S</div><h4>Used in Receiving Truth</h4>
+        <blockquote>Receive with meekness the engrafted word, which is able to save your souls.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/jas.1.21.KJV" target="_blank" rel="noopener">James 1:21 KJV</a></div>
+
+      <div class="fact-card" style="--dot:#AC2A1B"><div class="letter">S</div><h4>Should Characterize Ministers</h4>
+        <blockquote>By the meekness and gentleness of Christ.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/2co.10.1.KJV" target="_blank" rel="noopener">2 Corinthians 10:1 KJV</a></div>
+    </div>
+  </section>
+
+  <!-- ============ GLEANINGS ============ -->
+  <section class="reveal gleanings">
+    <div class="part-label">
+      <div class="kicker">Part Five</div>
+      <h2>Gleanings</h2>
+    </div>
+    <p class="part-intro">What's left in the field after the harvest — shorter mentions of meekness scattered through the rest of scripture.</p>
+
+    <div class="gleaning-list">
+      <div class="gleaning-item"><p>"He hath sent me to bind up the brokenhearted... to preach good tidings unto the meek."</p>
+        <a href="https://bible.com/bible/1/isa.61.1.KJV" target="_blank" rel="noopener">Isaiah 61:1 KJV</a></div>
+
+      <div class="gleaning-item"><p>"The ornament of a meek and quiet spirit, which is in the sight of God of great price."</p>
+        <a href="https://bible.com/bible/1/1pe.3.4.KJV" target="_blank" rel="noopener">1 Peter 3:4 KJV</a></div>
+
+      <div class="gleaning-item"><p>"What will ye? Shall I come unto you with a rod, or in love, and in the spirit of meekness?"</p>
+        <a href="https://bible.com/bible/1/1co.4.21.KJV" target="_blank" rel="noopener">1 Corinthians 4:21 KJV</a></div>
+
+      <div class="gleaning-item"><p>"With all lowliness and meekness, with longsuffering, forbearing one another in love."</p>
+        <a href="https://bible.com/bible/1/eph.4.2.KJV" target="_blank" rel="noopener">Ephesians 4:2 KJV</a></div>
+
+      <div class="gleaning-item"><p>"Who is a wise man... let him shew out of a good conversation his works with meekness of wisdom."</p>
+        <a href="https://bible.com/bible/1/jas.3.13.KJV" target="_blank" rel="noopener">James 3:13 KJV</a></div>
+
+      <div class="gleaning-item"><p>"Be ready always to give an answer to every man that asketh you... with meekness and fear."</p>
+        <a href="https://bible.com/bible/1/1pe.3.15.KJV" target="_blank" rel="noopener">1 Peter 3:15 KJV</a></div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING ============ -->
+  <section class="reveal closing">
+    <blockquote>"I am meek and lowly in heart: and ye shall find rest unto your souls."</blockquote>
+    <span class="ref">Matthew 11:29 KJV</span>
+    <p class="reflection">The leaf that lets go is not defeated by the wind — it was always going to fall well, because it never held on by force. Meekness works the same way: it is not surrender, it is trust, worn as a posture toward God and toward everyone else.</p>
+  </section>
+
+</div>
+
+<footer>
+  <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="currentColor"/></svg>
+  <div>Meekness — the quality of being patient in the reception of injuries.</div>
+</footer>
+
+<script>
+(function(){
+  var bar = document.getElementById('progressBar');
+  function updateBar(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var height = h.scrollHeight - h.clientHeight;
+    bar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+  }
+  document.addEventListener('scroll', updateBar, { passive:true });
+  updateBar();
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold:0.08 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>
