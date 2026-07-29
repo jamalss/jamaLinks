@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meekness — Root, Branch, and Crown</title>
+<title>Meekness — The Broken Warhorse</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -63,13 +63,22 @@
     background:radial-gradient(circle, rgba(255,210,63,0.20) 0%, rgba(232,89,12,0.10) 35%, rgba(21,14,9,0) 68%);
     pointer-events:none;
   }
-  .drift-leaf{ position:absolute; opacity:0.15; animation:drift 24s ease-in-out infinite; pointer-events:none; }
-  .drift-leaf.l1{ top:12%; left:9%;  width:64px; animation-duration:27s; }
-  .drift-leaf.l2{ top:66%; left:6%;  width:44px; animation-duration:20s; animation-delay:-4s; }
-  .drift-leaf.l3{ top:16%; right:9%; width:52px; animation-duration:23s; animation-delay:-10s; }
-  .drift-leaf.l4{ top:68%; right:7%; width:78px; animation-duration:29s; animation-delay:-15s; }
-  @keyframes drift{ 0%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-24px) rotate(9deg);} 100%{transform:translateY(0) rotate(0deg);} }
-  @media (prefers-reduced-motion:reduce){ .drift-leaf{animation:none;} html{scroll-behavior:auto;} }
+  .hero-horse{ width:min(72vw, 420px); height:auto; position:relative; z-index:1; margin-bottom:4px; filter:drop-shadow(0 20px 40px rgba(232,89,12,0.3)); }
+  #horseFigure{ animation:breathe 4.2s ease-in-out infinite; transform-origin:50% 60%; }
+  @keyframes breathe{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.012,0.99); } }
+  #maneFlow{ animation:maneSway 3.4s ease-in-out infinite; transform-origin:75% 20%; }
+  #tailFlow{ animation:tailSway 3.8s ease-in-out infinite; animation-delay:-1.2s; transform-origin:30% 60%; }
+  @keyframes maneSway{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(-5deg); } }
+  @keyframes tailSway{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(6deg); } }
+  .dust-mote{ animation:dustRise 2.4s ease-out infinite; }
+  .dust-mote.d2{ animation-delay:-.6s; }
+  .dust-mote.d3{ animation-delay:-1.3s; }
+  .dust-mote.d4{ animation-delay:-1.9s; }
+  @keyframes dustRise{ 0%{ transform:translateY(0); opacity:.55; } 100%{ transform:translateY(-22px); opacity:0; } }
+  @media (prefers-reduced-motion:reduce){
+    #horseFigure, #maneFlow, #tailFlow, .dust-mote{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
 
   .eyebrow{ font-family:var(--ui); font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--amber); margin-bottom:20px; position:relative; z-index:1; }
   .hero h1{
@@ -109,6 +118,23 @@
   .word-study .hebrew{ font-size:22px; font-family:var(--serif); }
   .bdb-list{ margin:0; padding-left:18px; }
   .bdb-list li{ margin-bottom:4px; }
+  .anav-callout p{ color:var(--parchment-2); font-size:15.5px; margin:0 0 14px; }
+  .anav-callout strong{ color:var(--parchment); }
+
+  /* ===================== THE BROKEN WARHORSE ===================== */
+  .horse-card{ background:var(--bg-panel); border:1px solid var(--line); border-radius:18px; padding:36px 38px; margin-top:36px; position:relative; z-index:2; }
+  .horse-card p{ color:var(--parchment-2); font-size:16px; margin:0 0 16px; }
+  .horse-card .verse-open blockquote{ font-style:italic; font-size:17px; color:var(--parchment); border-left:2px solid var(--ember); padding-left:18px; margin:0 0 6px; }
+  .horse-card .verse-open .ref{ font-family:var(--ui); font-size:12.5px; display:inline-block; margin-bottom:22px; }
+  .mirror-list{ list-style:none; margin:22px 0; padding:0; display:grid; gap:14px; }
+  .mirror-list li{ display:flex; gap:14px; align-items:flex-start; font-size:15px; color:var(--parchment-2); }
+  .mirror-list .mk{ flex:0 0 auto; width:28px; height:28px; border-radius:50%; background:var(--ember); color:var(--bg-dusk); font-family:var(--ui); font-weight:600; font-size:13px; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .mirror-list strong{ color:var(--parchment); }
+  .memory-anchor{
+    text-align:center; font-family:var(--display); font-style:italic; font-weight:500;
+    font-size:clamp(19px,3vw,26px); color:var(--gold-core); margin:30px 0 0; padding-top:26px; border-top:1px solid var(--line);
+  }
+  .horse-card .ref-inline{ display:block; font-family:var(--ui); font-size:12px; color:var(--ink-soft); margin-top:-8px; }
 
   /* ===================== VEIN TIMELINE ===================== */
   .vein-wrap{ position:relative; padding:60px 0 10px; }
@@ -184,24 +210,51 @@
 
 <div id="progressBar"></div>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <path id="leafshape" d="M50 4 L57 24 L74 14 L67 33 L91 38 L71 49 L86 63 L61 57 L58 79 L50 64 L42 79 L39 57 L14 63 L29 49 L9 38 L33 33 L26 14 L43 24 Z M50 60 L50 96"/>
-  </defs>
-</svg>
 
 <!-- ============ HERO ============ -->
 <div class="hero">
   <div class="hero-glow" aria-hidden="true"></div>
-  <svg class="drift-leaf l1" viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="#E8590C"/></svg>
-  <svg class="drift-leaf l2" viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="#D8342A"/></svg>
-  <svg class="drift-leaf l3" viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="#FFD23F"/></svg>
-  <svg class="drift-leaf l4" viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="#7A231B"/></svg>
 
-  <div class="eyebrow">Root, branch, and crown</div>
+  <svg class="hero-horse" viewBox="0 0 240 220" role="img" aria-label="A rearing horse, full strength intact, answering the rein">
+    <g id="horseFigure">
+      <circle class="dust-mote d1" cx="80" cy="204" r="3" fill="#F7A72E" opacity=".5"/>
+      <circle class="dust-mote d2" cx="93" cy="209" r="2.4" fill="#FFD23F" opacity=".5"/>
+      <circle class="dust-mote d3" cx="69" cy="207" r="2" fill="#E8590C" opacity=".5"/>
+      <circle class="dust-mote d4" cx="101" cy="203" r="2.6" fill="#FFD23F" opacity=".5"/>
+
+      <path d="M85 145 L78 175 L82 200" fill="none" stroke="#C9401E" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M97 150 L92 178 L97 200" fill="none" stroke="#AC2A1B" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <ellipse cx="118" cy="128" rx="46" ry="28" fill="#E8590C" transform="rotate(-18 118 128)"/>
+
+      <path d="M140 122 L158 108 L150 88" fill="none" stroke="#C9401E" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M150 118 L172 100 L165 78" fill="none" stroke="#7A1F1A" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <g id="tailFlow">
+        <path d="M75 128 C50 138, 30 152, 15 172" fill="none" stroke="#FFD23F" stroke-width="9" stroke-linecap="round"/>
+        <path d="M78 135 C56 146, 38 158, 26 176" fill="none" stroke="#F7A72E" stroke-width="6" stroke-linecap="round"/>
+      </g>
+
+      <path d="M150 112 C160 85, 165 58, 178 38" fill="none" stroke="#E8590C" stroke-width="24" stroke-linecap="round"/>
+
+      <g id="maneFlow">
+        <path d="M178 40 C160 50, 140 55, 120 60" fill="none" stroke="#FFD23F" stroke-width="6" stroke-linecap="round"/>
+        <path d="M182 50 C165 62, 145 68, 128 75" fill="none" stroke="#FFD23F" stroke-width="5" stroke-linecap="round"/>
+        <path d="M186 60 C170 74, 150 82, 135 90" fill="none" stroke="#F7A72E" stroke-width="4" stroke-linecap="round"/>
+      </g>
+
+      <ellipse cx="190" cy="32" rx="17" ry="12" fill="#F2822A" transform="rotate(18 190 32)"/>
+      <path d="M205 27 L224 34 L206 40 Z" fill="#F2822A"/>
+      <path d="M182 22 L177 4 L189 16 Z" fill="#F2822A"/>
+      <path d="M195 20 L200 2 L204 18 Z" fill="#F2822A"/>
+      <circle cx="192" cy="28" r="2" fill="#150E09"/>
+    </g>
+  </svg>
+
+  <div class="eyebrow">Broken, not beaten</div>
   <h1>Meekness</h1>
-  <p class="lede">A leaf does not fight the season. It turns brilliant, then lets go — patient, unresisting, still rooted to the very end. Scripture calls that meekness.</p>
-  <p class="stat-line">10 blessings · 10 lives · 8 marks — gathered whole, below</p>
+  <p class="lede">Every ounce of strength stays. Only the fight leaves. Scripture calls that meek.</p>
+  <p class="stat-line">The broken warhorse · 10 blessings · 10 lives · 8 marks — gathered whole, below</p>
   <div class="scroll-cue"><span></span>Scroll</div>
 </div>
 
@@ -244,6 +297,50 @@
           <dt>Oxford</dt><dd>Meek: mild.</dd>
         </div>
       </dl>
+
+      <div class="anav-callout" style="margin-top:30px; border-top:1px solid var(--line); padding-top:26px;">
+        <p>The root behind the word means "to bend low" — but that bending happens two ways. Sometimes life forces someone low: poverty, oppression, affliction with no power to resist it. Sometimes a person bends low on purpose, in the presence of God. Scripture treats these as close cousins; both end up in the same posture, looking up.</p>
+        <p><strong>This is not weakness.</strong> The same root can mean "to afflict" — ʿānāv describes someone who has the standing to assert themselves and chooses to bend anyway. Moses, "very meek, above all men" (Numbers 12:3), was not a doormat; he led a nation and stood before Pharaoh. The meek inherit the land (Psalm 37:11) not by retreating from it, but by refusing to seize it by force.</p>
+        <p>The word really has two sides of one coin. One side is circumstance — poor, oppressed, with nothing left to lean on but God. The other is character — a settled gentleness toward God and everyone else. Hebrew scribes mixed ʿānāv up with a close relative, ʿānî, so often that the two blur in the text. One leans toward the affliction; the other toward the humility it produces. Scripture blesses both — the one bent low by life, and the one who bends low on purpose.</p>
+        <p>Proverbs draws the contrast sharply: God opposes the proud but gives grace to the lowly (Proverbs 3:34). The proud stay rigid, holding their ground on their own strength. The meek stay flexible — because they've already put their weight on someone else.</p>
+      </div>
+
+      <dl class="word-study" style="margin-top:24px;">
+        <div><dt>Position</dt><dd>Bowed low — by life, or by choice.</dd></div>
+        <div><dt>Disposition</dt><dd>Gentle. Not self-assertive.</dd></div>
+        <div><dt>Dependence</dt><dd>Reliant on God, not on self.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ THE BROKEN WARHORSE ============ -->
+  <section class="reveal">
+    <div class="part-label">
+      <div class="kicker">Part Two</div>
+      <h2>The Broken Warhorse</h2>
+    </div>
+    <p class="part-intro">Scripture doesn't leave meekness as an abstract word. It hands you a picture: an animal built for war, answering a whisper.</p>
+
+    <div class="horse-card">
+      <div class="verse-open">
+        <blockquote>Hast thou given the horse strength? Hast thou clothed his neck with thunder?... He mocketh at fear, and is not affrighted; neither turneth he back from the sword.</blockquote>
+        <a class="ref" href="https://bible.com/bible/1/job.39.19-25.KJV" target="_blank" rel="noopener">Job 39:19-25 KJV</a>
+      </div>
+
+      <p>In the ancient world, a warhorse was terrifying — trained to charge into noise and smoke without flinching. But before it was of any use, it had to be broken. Not broken down. Broken in. The wild will is tamed; the power stays completely intact.</p>
+
+      <ul class="mirror-list">
+        <li><span class="mk">1</span><div><strong>It keeps all its strength.</strong> A broken horse can still crush a man or outrun a predator. Meekness isn't losing your power — it's choosing when to use it.</div></li>
+        <li><span class="mk">2</span><div><strong>It answers the lightest touch.</strong> A wild horse ignores the rein. A broken one turns at a whisper of pressure.</div></li>
+        <li><span class="mk">3</span><div><strong>It trusts the rider completely.</strong> It can't see the whole battlefield, and charges anyway, because it knows whose hand is on the reins.</div></li>
+        <li><span class="mk">4</span><div><strong>It was subdued through love, not force.</strong> A good horseman doesn't break a horse by brutality — he earns its trust through patience.</div></li>
+        <li><span class="mk">5</span><div><strong>Its power now serves the rider, not itself.</strong> The same strength that was once chaotic now carries someone else into what matters.</div></li>
+      </ul>
+
+      <p>Jesus had the power to call down twelve legions of angels. He chose the cross instead.</p>
+      <a class="ref-inline" href="https://bible.com/bible/1/mat.26.53.KJV" target="_blank" rel="noopener">Matthew 26:53 KJV</a>
+
+      <div class="memory-anchor">"I am strong enough to fight, but I choose Your rein."</div>
     </div>
   </section>
 
@@ -253,7 +350,7 @@
       <div class="vein-line" aria-hidden="true"></div>
 
       <div class="part-label" style="margin-bottom:30px;">
-        <div class="kicker">Part Two</div>
+        <div class="kicker">Part Three</div>
         <h2>Ten Blessings</h2>
       </div>
 
@@ -343,7 +440,7 @@
       </div></div>
 
       <div class="part-label" style="margin:20px 0 30px;">
-        <div class="kicker">Part Three</div>
+        <div class="kicker">Part Four</div>
         <h2>Ten Lives</h2>
       </div>
 
@@ -439,10 +536,10 @@
   <!-- ============ CROWN: FACTS ============ -->
   <section class="reveal">
     <div class="part-label">
-      <div class="kicker">Part Four</div>
+      <div class="kicker">Part Five</div>
       <h2>Eight Marks</h2>
     </div>
-    <p class="part-intro">Where the stem opens into leaves — eight things scripture says meekness does, spelling out the word itself.</p>
+    <p class="part-intro">Eight things scripture says meekness does — spelling the word itself out, one letter at a time.</p>
 
     <div class="facts-grid">
       <div class="fact-card" style="--dot:#FFD23F"><div class="letter">M</div><h4>It Must Be Sought</h4>
@@ -482,12 +579,15 @@
   <!-- ============ GLEANINGS ============ -->
   <section class="reveal gleanings">
     <div class="part-label">
-      <div class="kicker">Part Five</div>
+      <div class="kicker">Part Six</div>
       <h2>Gleanings</h2>
     </div>
     <p class="part-intro">What's left in the field after the harvest — shorter mentions of meekness scattered through the rest of scripture.</p>
 
     <div class="gleaning-list">
+      <div class="gleaning-item"><p>"Surely he scorneth the scorners: but he giveth grace unto the lowly."</p>
+        <a href="https://bible.com/bible/1/pro.3.34.KJV" target="_blank" rel="noopener">Proverbs 3:34 KJV</a></div>
+
       <div class="gleaning-item"><p>"He hath sent me to bind up the brokenhearted... to preach good tidings unto the meek."</p>
         <a href="https://bible.com/bible/1/isa.61.1.KJV" target="_blank" rel="noopener">Isaiah 61:1 KJV</a></div>
 
@@ -512,13 +612,13 @@
   <section class="reveal closing">
     <blockquote>"I am meek and lowly in heart: and ye shall find rest unto your souls."</blockquote>
     <span class="ref">Matthew 11:29 KJV</span>
-    <p class="reflection">The leaf that lets go is not defeated by the wind — it was always going to fall well, because it never held on by force. Meekness works the same way: it is not surrender, it is trust, worn as a posture toward God and toward everyone else.</p>
+    <p class="reflection">A horse that stops fighting the rein hasn't lost anything. The same legs, the same power, all of it still there — just no longer spent resisting. Meekness is that same trade: not surrender, but strength finally pointed somewhere worth going.</p>
   </section>
 
 </div>
 
 <footer>
-  <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#leafshape" fill="currentColor"/></svg>
+  <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M22 92 L22 50 A28 28 0 0 1 78 50 L78 92" fill="none" stroke="currentColor" stroke-width="13" stroke-linecap="round"/></svg>
   <div>Meekness — the quality of being patient in the reception of injuries.</div>
 </footer>
 
